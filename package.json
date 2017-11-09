@@ -1,0 +1,23 @@
+{
+  "name": "webrtc",
+  "version": "0.1.0",
+  "description": "webrtc practices",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xiilei/webrtc.git"
+  },
+  "author": "xilei125@163.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/xiilei/webrtc/issues"
+  },
+  "homepage": "https://github.com/xiilei/webrtc#readme",
+  "dependencies": {
+    "koa": "^2.4.1",
+    "koa-static": "^4.0.1"
+  }
+}
