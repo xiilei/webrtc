@@ -35,7 +35,7 @@
 yarn run test
 ```
 
-# 连接
+# 参考
 
 - [gortc/stun](https://github.com/gortc/stun)
 - [muaz-khan/WebRTC-Experiment](https://github.com/muaz-khan/WebRTC-Experiment)
