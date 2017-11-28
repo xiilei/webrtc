@@ -3,12 +3,41 @@
 
 <head>
     <meta charset="utf-8">
-    <title>webrtc</title>
+    <title>webrtc demo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
-
-    <script src="main.js"></script>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="me">
+                    <video id="localVideo"></video>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="my-controls">
+                    <button type="button" class="btn btn-primary btn-sm">start</button>
+                    <button type="button" class="btn btn-danger btn-sm">stop</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="peer"></div>
+            </div>
+            <div class="col-sm-3">
+                <div class="peer"></div>
+            </div>
+            <div class="col-sm-3">
+                <div class="peer"></div>
+            </div>
+            <div class="col-sm-3">
+                <div class="peer"></div>
+            </div>
+        </div>
+        <script src="dist/app.bundle.js"></script>
 </body>
 
 </html>

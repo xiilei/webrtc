@@ -1,0 +1,22 @@
+.container{
+  padding: 2%;
+}
+
+.me{
+  background: #add8f7;
+  height: 300px;
+  width: 300px;
+  margin: 0 0 20px 0;
+}
+
+.peer{
+  background: #add8f7;
+  width: 200px;
+  height: 200px;
+  float: left;
+  margin-right: 10px;
+}
+
+.footer{
+  clear: both;
+}
