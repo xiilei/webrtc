@@ -7,15 +7,23 @@ function genName() {
 
 
 const url = new URL(location.href);
-const rid = url.searchParams.rid || 'room1';
-const uid = url.searchParams.uid || 'uid1';
-const name = url.searchParams.uname || genName();
+const rid = url.searchParams.get('rid') || 'room1';
+const id = url.searchParams.get('id') || 'id1';
+const name = url.searchParams.get('uname') || genName();
 
-new App({
-  url: 'ws://' + url.host + '/?rid=' + encodeURIComponent(rid) + '&uid=' + encodeURIComponent(uid),
-  user: {
-    rid: rid,
-    uid: uid,
-    name: name
+const localVideo = document.querySelector('#local-video');
+const localStart = document.querySelector('#local-start');
+
+const app = new App({
+  url: 'ws://' + url.host + '/?rid=' + encodeURIComponent(rid) + '&id=' + encodeURIComponent(id),
+  user: { rid, id, name },
+  elm: {
+    localVideo,
+    peersContainer: document.querySelector('#peersContainer')
   }
+});
+
+localStart.addEventListener('click', function () {
+  app.start();
+  this.disabled = true;
 });

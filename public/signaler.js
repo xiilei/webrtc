@@ -43,9 +43,10 @@ class Signaler {
     });
   }
 
-  onmessage(m) {
-    trace('recv message:', m);
-    this.handle(JSON.parse(m));
+  onmessage(e) {
+    const message = JSON.parse(e.data);
+    trace('recv message:', message);
+    this.handle(message);
   }
 
   onclose(r) {
