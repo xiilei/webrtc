@@ -1,12 +1,9 @@
-const Signaler = require('./signaler');
+const Signaler = require('../signaler');
+const { traceNs, createVideoBox, getUserMedia, traceStreamTracks } = require('../util');
 const Peer = require('./peer');
-const trace = require('./util').traceNs('app');
 
-function traceStreamTracks(stream) {
-  stream.getTracks().forEach(track => {
-    trace('track', track);
-  });
-}
+const trace = traceNs('origin');
+
 
 class App {
   constructor(conf) {
@@ -118,21 +115,13 @@ class App {
       this.removeVideo(id);
     }
     traceStreamTracks(stream);
-    const videoEl = document.createElement('video');
-    const div1 = document.createElement('div');
-    const div2 = document.createElement('div');
-    div1.id = id;
-    div1.className = 'col-sm-3';
-    div2.className = 'peer';
-    videoEl.id = stream.id;
-    videoEl.srcObject = stream;
-    videoEl.autoplay = true;
-    videoEl.muted = true;
-    this.videos.set(id, videoEl);
-    div2.appendChild(videoEl);
-    div1.appendChild(div2);
-    this.elm.peersContainer.appendChild(div1);
-    videoEl.play();
+
+    const { box, video } = createVideoBox();
+    box.id = id;
+    video.id = stream.id;
+    video.srcObject = stream;
+    this.elm.peersContainer.appendChild(box);
+    video.play();
   }
 
   setLocalStream(stream) {
@@ -142,7 +131,7 @@ class App {
   }
 
   initLocalMedia() {
-    return navigator.mediaDevices.getUserMedia(this.conf.media)
+    return getUserMedia(this.conf.media)
       .then(stream => {
         trace('got stream with constraints:', this.conf.media);
         this.setLocalStream(stream);

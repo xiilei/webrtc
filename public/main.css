@@ -13,10 +13,10 @@
 }
 
 .peer{
-  background: #add8f7;
-  height: 300px;
-  float: left;
-  margin-right: 10px;
+}
+
+.peer video{
+  width: 200px;
 }
 
 .footer{

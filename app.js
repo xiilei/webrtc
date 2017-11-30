@@ -2,6 +2,7 @@ const http = require('http');
 const Koa = require('koa');
 const serve = require('koa-static');
 const Signaler = require('./lib/signaling');
+const { startServer } = require('./lib/sfu');
 const app = new Koa();
 
 const signaler = new Signaler();
@@ -19,5 +20,8 @@ app.use(serve(__dirname + '/public'));
 
 const server = http.createServer(app.callback());
 signaler.start({ server });
+
+//sfu 
+startServer({}, signaler);
 
 server.listen(process.env.WEBRTC_TEST_PORT || 3000);
