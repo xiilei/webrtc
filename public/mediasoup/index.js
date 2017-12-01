@@ -4,8 +4,9 @@
 const mediasoupClient = require('mediasoup-client');
 const { traceNs, getUserMedia, traceStreamTracks, createVideoBox } = require('../util');
 const Signaler = require('../signaler');
-
 const trace = traceNs('mediasoup');
+
+global.mc = mediasoupClient;
 
 class App {
   constructor(conf) {
@@ -108,7 +109,7 @@ class App {
   }
 
   handleMessage(message) {
-    let cbs = null;
+    let cbs = null, div = null;
     switch (message.type) {
       case 'joinok':
         this.connect();
@@ -127,6 +128,14 @@ class App {
         if (message.mid && this.requestCallbacks.has(message.mid)) {
           this.requestCallbacks.get(message.mid).errback(message.payload);
         }
+        break;
+      case 'leave':
+        message.payload.forEach((id) => {
+          div = document.querySelector('#' + id);
+          if (div) {
+            this.elm.peersContainer.removeChild(div);
+          }
+        });
         break;
     }
   }

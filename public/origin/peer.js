@@ -1,4 +1,4 @@
-const { traceNs } = require('./util');
+const { traceNs } = require('../util');
 
 class Peer {
   constructor(options) {

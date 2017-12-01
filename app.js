@@ -7,6 +7,9 @@ const app = new Koa();
 
 const signaler = new Signaler();
 
+//sfu 
+startServer({}, signaler);
+
 //所有房间数据
 app.use((ctx, next) => {
   if (ctx.request.path.indexOf('/api/signaler') === -1) {
@@ -21,7 +24,6 @@ app.use(serve(__dirname + '/public'));
 const server = http.createServer(app.callback());
 signaler.start({ server });
 
-//sfu 
-startServer({}, signaler);
+
 
 server.listen(process.env.WEBRTC_TEST_PORT || 3000);

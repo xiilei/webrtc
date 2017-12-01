@@ -17,6 +17,7 @@
 
 .peer video{
   width: 200px;
+  border: 2px solid #add8f7;
 }
 
 .footer{
