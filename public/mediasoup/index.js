@@ -127,6 +127,7 @@ class App {
       case 'error':
         if (message.mid && this.requestCallbacks.has(message.mid)) {
           this.requestCallbacks.get(message.mid).errback(message.payload);
+          this.requestCallbacks.delete(message.mid);
         }
         break;
       case 'leave':
