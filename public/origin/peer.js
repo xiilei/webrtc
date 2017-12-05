@@ -24,27 +24,40 @@ class Peer {
 
   addStream(stream) {
     this.trace('add local stream', stream);
+    this.traceState();
     this.pc.addStream(stream);
+  }
+
+  addCandidate(candidate) {
+    if (candidate) {
+      this.pc.addIceCandidate(candidate);
+    }
   }
 
   onnegotiationneeded(e) {
     this.trace('negotiationneeded', e);
+    this.traceState();
   }
 
   onicecandidate(candidate) {
+    this.handlers.handleCandidate(candidate);
     this.trace('candidate', candidate);
+    this.traceState();
   }
 
   oniceconnectionstatechange(e) {
     this.trace('iceconnectionstate', e);
+    this.traceState();
   }
 
   onicegatheringstatechange(e) {
     this.trace('icegatheringstate', e);
+    this.traceState();
   }
 
   onsignalingstatechange(e) {
     this.trace('signalingstate', e);
+    this.traceState();
   }
 
   onaddstream(e) {
@@ -54,6 +67,14 @@ class Peer {
 
   onremovestream(e) {
     this.trace('remove remote stream', e);
+    this.traceState();
+  }
+
+  traceState() {
+    this.trace('iceConnectionState:', this.pc.iceConnectionState,
+      ',iceGatheringState:', this.pc.iceGatheringState,
+      ',signalingState:', this.pc.signalingState);
+    this.pc.getStats().then(stats => { this.trace('stats:', stats); });
   }
 
   offer(options) {

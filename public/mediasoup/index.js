@@ -6,8 +6,12 @@ const { traceNs, getUserMedia, traceStreamTracks, createVideoBox } = require('..
 const Signaler = require('../signaler');
 const trace = traceNs('mediasoup');
 
+//debug
 global.mc = mediasoupClient;
 
+/**
+ * mediasoup app
+ */
 class App {
   constructor(conf) {
     this.conf = Object.assign({

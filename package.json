@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/xiilei/webrtc#readme",
   "dependencies": {
+    "ip": "^1.1.5",
     "koa": "^2.4.1",
     "koa-static": "^4.0.1",
     "ws": "^3.3.2"

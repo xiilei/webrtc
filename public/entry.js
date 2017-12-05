@@ -1,4 +1,3 @@
-const App = require('./mediasoup');
 const { random } = require('./util');
 
 function genName() {
@@ -6,7 +5,7 @@ function genName() {
 }
 
 
-const url = new URL(location.href);
+const url = global.url;
 const rid = url.searchParams.get('rid') || 'room1';
 const id = url.searchParams.get('id') || 'id1';
 const name = url.searchParams.get('uname') || genName();
@@ -14,16 +13,12 @@ const name = url.searchParams.get('uname') || genName();
 const localVideo = document.querySelector('#local-video');
 const localStart = document.querySelector('#local-start');
 
-const app = new App({
-  url: 'ws://' + url.host + '/?rid=' + encodeURIComponent(rid) + '&id=' + encodeURIComponent(id),
+module.exports = {
+  url: (location.protocol == 'https:' ? 'wss' : 'ws') + '://' + url.host + '/?rid=' + encodeURIComponent(rid) + '&id=' + encodeURIComponent(id),
   user: { rid, id, name },
   elm: {
     localVideo,
+    localStart,
     peersContainer: document.querySelector('#peersContainer')
   }
-});
-
-localStart.addEventListener('click', function () {
-  app.start();
-  this.disabled = true;
-});
+};

@@ -1,4 +1,6 @@
-const http = require('http');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
 const Koa = require('koa');
 const serve = require('koa-static');
 const Signaler = require('./lib/signaling');
@@ -21,7 +23,10 @@ app.use((ctx, next) => {
 
 app.use(serve(__dirname + '/public'));
 
-const server = http.createServer(app.callback());
+const server = https.createServer({
+  cert: fs.readFileSync(path.join(__dirname, '/keys/test.crt')),
+  key: fs.readFileSync(path.join(__dirname, '/keys/test.key'))
+}, app.callback());
 signaler.start({ server });
 
 

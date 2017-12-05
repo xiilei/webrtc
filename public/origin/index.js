@@ -4,20 +4,20 @@ const Peer = require('./peer');
 
 const trace = traceNs('origin');
 
-
+//origin app
 class App {
   constructor(conf) {
     //default config
     this.conf = Object.assign({
       media: {
         video: true,
-        audio: true
+        audio: false
       },
       offer: {
         offerToReceiveAudio: true,
         offerToReceiveVideo: true,
       },
-      iceServers: [{ 'urls': 'stun:stun.l.google.com:19302' }]
+      iceServers: []
     }, conf);
     this.signaler = new Signaler(this.conf.url, this.handleMessage.bind(this));
     this.localStream = null;
@@ -66,7 +66,13 @@ class App {
         peer.handleAnswer(message.payload);
         break;
       case 'candidate':
-        return;
+        peer = this.peers.get(message.from);
+        if (!peer) {
+          trace('bad candidate,peer unknow ', message.from);
+          break;
+        }
+        peer.addCandidate(message.payload);
+        break;
       case 'leave':
         message.payload.forEach((id) => {
           let peer = this.peers.get(id);
@@ -89,7 +95,8 @@ class App {
       name: user.name,
       iceServers: this.conf.iceServers,
       handlers: {
-        handleStream: this.handleReceiveStream.bind(this)
+        handleStream: this.handleReceiveStream.bind(this),
+        handleCandidate: this.handleCandidate.bind(this)
       }
     }, this.signaler);
 
@@ -121,7 +128,10 @@ class App {
     video.id = stream.id;
     video.srcObject = stream;
     this.elm.peersContainer.appendChild(box);
-    video.play();
+  }
+
+  handleCandidate(e) {
+    this.signaler.send({ type: 'candidate', payload: e.candidate });
   }
 
   setLocalStream(stream) {

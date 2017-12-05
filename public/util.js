@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 
-// Logging utility function.
 function trace(args) {
   const now = (window.performance.now() / 1000).toFixed(3);
   args.push('-->', now);

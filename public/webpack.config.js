@@ -1,10 +1,13 @@
 const path = require('path');
 
 const config = {
-  entry: './entry.js',
+  entry: {
+    origin: './entry.v1.js',
+    mediasoup: './entry.v2.js'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'app.bundle.js'
+    filename: '[name].bundle.js'
   },
   module: {
     rules: [
